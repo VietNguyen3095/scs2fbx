@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. v0.1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Build
+        run: cargo build --release --locked
+
+      - name: Test
+        run: cargo test --release --locked
+
+      # The exe is self-contained; the zip carries the docs a user needs beside it.
+      - name: Package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist-out | Out-Null
+          Copy-Item target/release/scs2fbx.exe dist-out/
+          Copy-Item README.md, LICENSE dist-out/
+          Copy-Item vendor/ConverterPIX-LICENSE.txt dist-out/
+          Compress-Archive -Path dist-out/* -DestinationPath scs2fbx-windows-x64.zip
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          draft: false
+          generate_release_notes: true
+          files: |
+            scs2fbx-windows-x64.zip
+            target/release/scs2fbx.exe

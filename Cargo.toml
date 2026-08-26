@@ -1,0 +1,11 @@
+[package]
+name = "scs2fbx"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+eframe = "0.35.0"
+flate2 = "1.1.9"
+rfd = "0.17.2"
+zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
+

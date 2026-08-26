@@ -1,0 +1,11 @@
+scs2fbx bundles third-party software.
+This program embeds ConverterPIX (https://github.com/mwl4/ConverterPIX) by
+Michal Lesniak, licensed under the GNU Lesser General Public License v3.0.
+An unmodified copy is bundled as vendor/converter_pix.exe, unpacked at runtime
+and run as a separate process. Its licence text is in
+vendor/ConverterPIX-LICENSE.txt and its complete source is available at the URL
+above.
+
+The 3nK deobfuscation table and algorithm are derived from SII_Decrypt
+(https://github.com/TheLazyTomcat/SII_Decrypt) by Frantisek Milt, which
+documents the format.

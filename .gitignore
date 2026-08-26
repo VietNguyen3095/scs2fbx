@@ -1,0 +1,18 @@
+/target
+/target-test
+
+# Local GCC toolchain, ~580 MB. Install your own; see README.
+/.toolchain
+
+# Leftover copy of SCS Blender Tools from before this stopped needing Blender.
+/.addoncheck
+
+# The built application. Attach it to a GitHub Release instead of committing
+# 31 MB of binary on every rebuild.
+/dist/*.exe
+
+# vgmstream is fetched from vgmstream.org, not vendored
+/dist/vgmstream/
+
+# Second target dir used to test the MSVC toolchain.
+/target-msvc
